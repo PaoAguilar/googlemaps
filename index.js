@@ -30,6 +30,7 @@ function initMap() {
     map,
   });
   map.addListener("click", (e) => {
+      console.log('EVENTO', e.latLng)
     geocode({ location: e.latLng });
   });
   clear();
@@ -46,7 +47,6 @@ function geocode(request) {
     .geocode(request)
     .then((result) => {
       const { results } = result;
-
     //   map.setCenter(results[0].geometry.location);
       marker.setPosition(results[0].geometry.location);
       marker.setMap(map);

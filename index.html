@@ -2,19 +2,29 @@
 <html>
   <head>
     <title>Add Map</title>
-
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css' rel='stylesheet' />
     <link rel="stylesheet" type="text/css" href="./style.css" />
-    <script src="./index.js"></script>
-  </head>
-  <body>
-    <h3>My Google Maps Demo</h3>
-    <!--The div element for the map -->
-    <div id="map"></div>
-
+    
+</head>
+<body>
+    <h3>My Google Maps and Mapbox Demo</h3>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js'></script>
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
     <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqtdgTwFwl4tiu0WCDt3xbk-iM9su1h08&callback=initMap&libraries=&v=weekly"
-      async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqtdgTwFwl4tiu0WCDt3xbk-iM9su1h08&callback=initMap&libraries=&v=weekly"
+    async
     ></script>
+    
+    <!--The div elements for the map -->
+    <div id="container" >
+        <div id="map">
+            <script src="./index.js"></script>
+        </div>
+        <div id="mapbox">
+            <script src="./mapbox.js"></script>
+        </div>
+    </div>
+    
+    
   </body>
 </html>
