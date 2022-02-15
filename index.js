@@ -15,7 +15,7 @@ function initMap() {
     mapTypeControl: false,
   });
   geocoder = new google.maps.Geocoder();
-  
+
   // Insert element into the dom
   const googlemapResponse = document.getElementById("responses");
   response = document.createElement("pre");
@@ -31,6 +31,8 @@ function initMap() {
   });
   map.addListener("click", (e) => {
     geocode({ location: e.latLng });
+    marker.setPosition(e.latLng);
+    marker.setMap(map);
   });
   clear();
 }
@@ -46,8 +48,7 @@ function geocode(request) {
     .then((result) => {
       const { results } = result;
       console.log('GOOGLE MAPS Info', results)
-      marker.setPosition(results[0].geometry.location);
-      marker.setMap(map);
+      
       response.innerText = JSON.stringify(result, null, 2);
       return results;
     })
