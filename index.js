@@ -11,13 +11,12 @@ function initMap() {
     mapTypeControl: false,
   });
   geocoder = new google.maps.Geocoder();
-
-  response = document.createElement("pre");
-  response.id = "response";
-  response.innerText = "";
-  responseDiv = document.createElement("div");
-  responseDiv.id = "response-container";
-  responseDiv.appendChild(response);
+//   response = document.createElement("pre");
+//   response.id = "response";
+//   response.innerText = "";
+//   responseDiv = document.createElement("div");
+//   responseDiv.id = "response-container";
+//   responseDiv.appendChild(response);
 
   const instructionsElement = document.createElement("p");
 
@@ -25,12 +24,11 @@ function initMap() {
   instructionsElement.innerHTML =
     "<strong>Instructions</strong>: Click on the map to reverse geocode.";
   map.controls[google.maps.ControlPosition.LEFT_TOP].push(instructionsElement);
-  map.controls[google.maps.ControlPosition.LEFT_TOP].push(responseDiv);
+//   map.controls[google.maps.ControlPosition.LEFT_TOP].push(responseDiv);
   marker = new google.maps.Marker({
     map,
   });
   map.addListener("click", (e) => {
-      console.log('EVENTO', e.latLng)
     geocode({ location: e.latLng });
   });
   clear();
@@ -38,7 +36,7 @@ function initMap() {
 
 function clear() {
   marker.setMap(null);
-  responseDiv.style.display = "none";
+//   responseDiv.style.display = "none";
 }
 
 function geocode(request) {
@@ -47,11 +45,12 @@ function geocode(request) {
     .geocode(request)
     .then((result) => {
       const { results } = result;
+      console.log('results',results)
     //   map.setCenter(results[0].geometry.location);
       marker.setPosition(results[0].geometry.location);
       marker.setMap(map);
-      responseDiv.style.display = "block";
-      response.innerText = JSON.stringify(result, null, 2);
+    //   responseDiv.style.display = "block";
+    //   response.innerText = JSON.stringify(result, null, 2);
       return results;
     })
     .catch((e) => {
