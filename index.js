@@ -4,6 +4,10 @@ let geocoder;
 let responseDiv;
 let response;
 
+const insertAfter = (referenceNode, newNode) => {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     zoom: 8,
@@ -11,13 +15,17 @@ function initMap() {
     mapTypeControl: false,
   });
   geocoder = new google.maps.Geocoder();
+  
+  // Insert element into the dom
+  const googlemapResponse = document.getElementById("responses");
+  response = document.createElement("pre");
+  responseDiv = document.createElement("div");
+  responseDiv.id = "response-container";
+  responseDiv.appendChild(response);
+  const div = document.getElementById("container");
+  insertAfter(div, googlemapResponse)
+  googlemapResponse.appendChild(responseDiv);
 
-  const instructionsElement = document.createElement("p");
-
-  instructionsElement.id = "instructions";
-  instructionsElement.innerHTML =
-    "<strong>Instructions</strong>: Click on the map to reverse geocode.";
-  map.controls[google.maps.ControlPosition.LEFT_TOP].push(instructionsElement);
   marker = new google.maps.Marker({
     map,
   });
@@ -40,6 +48,7 @@ function geocode(request) {
       console.log('GOOGLE MAPS Info', results)
       marker.setPosition(results[0].geometry.location);
       marker.setMap(map);
+      response.innerText = JSON.stringify(result, null, 2);
       return results;
     })
     .catch((e) => {
