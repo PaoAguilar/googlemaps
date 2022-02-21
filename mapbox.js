@@ -34,7 +34,7 @@ const mapboxGeocoder = new MapboxGeocoder({
     mapboxgl: mapboxgl, // Set the mapbox-gl instance
   });
   
-// Add the geocoder to the map
+// Add the geocoder to the map (search functionality)
 mapbox.addControl(mapboxGeocoder);
 mapbox.on('load', () => {
     mapboxGeocoder.on('result', (info) => {
