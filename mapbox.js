@@ -17,6 +17,7 @@ const mapboxContainer = document.getElementById("container");
 insertAfter(mapboxContainer, mapboxResponse)
 mapboxResponse.appendChild(mapboxRes);
 
+// Initialize mapbox Map
 const mapbox = new mapboxgl.Map({
     container: 'mapbox', // container ID
     style: 'mapbox://styles/mapbox/streets-v11', // style URL
@@ -27,6 +28,27 @@ const mapbox = new mapboxgl.Map({
 const mapboxMarker = new mapboxgl.Marker()
 mapboxMarker.remove();
 
+// Initialize the geocoder
+const mapboxGeocoder = new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken, // Set the access token
+    mapboxgl: mapboxgl, // Set the mapbox-gl instance
+  });
+  
+// Add the geocoder to the map
+mapbox.addControl(mapboxGeocoder);
+mapbox.on('load', () => {
+    mapboxGeocoder.on('result', (info) => {
+        const result = info.result
+        const coords = {lng: result.center[0], lat: result.center[1]}
+        const res = reverseLocation(coords)
+        res.then((result) => {
+            console.log('MAPBOX Info', result)
+            responseMapbox.innerText = JSON.stringify(result, null, 2);
+        })
+      });
+})
+
+// Get address information on click map
 mapbox.on('click', (e) => {
     const coords = e.lngLat
     const res = reverseLocation(coords)
