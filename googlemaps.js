@@ -11,7 +11,7 @@ const center = { lat: 13.694517743321262, lng:  -89.23082947704344 }
 
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 8,
+    zoom: 16,
     center,
     mapTypeControl: false,
   });
@@ -19,6 +19,26 @@ function initMap() {
   marker = new google.maps.Marker({
     map,
   });
+
+  // current location
+  infoWindow = new google.maps.InfoWindow();
+  navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
+    enableHighAccuracy: true
+  })
+
+  function successLocation(position) {
+    const pos = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+    };
+    geocode({ location: pos });
+    marker.setPosition(pos);
+    marker.setMap(map);
+    map.setCenter(pos);
+  }
+  function errorLocation() {
+    handleLocationError(true, infoWindow, map.getCenter());
+  }
 
   // Insert element into the dom
   const googlemapResponse = document.getElementById("responses");
