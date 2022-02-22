@@ -44,6 +44,9 @@ function setUpMapbox(center) {
     const mapboxGeocoder = new MapboxGeocoder({
     accessToken: mapboxgl.accessToken, // Set the access token
     mapboxgl: mapboxgl, // Set the mapbox-gl instance
+    // Limit seach results to el salvador.
+    countries: 'sv',
+    limit: 9
     });
         
     // Add the geocoder to the map (search functionality)
