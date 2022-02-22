@@ -55,7 +55,7 @@ function initMap() {
   const options = {
     fields: ["address_components","formatted_address", "geometry", "name", "place_id", "plus_code", "types"],
     strictBounds: false,
-    types: ["establishment"],
+    types: ["geocode"],
   };
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
   const autocomplete = new google.maps.places.Autocomplete(input, options);
